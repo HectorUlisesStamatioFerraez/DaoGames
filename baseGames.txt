@@ -1,0 +1,64 @@
+DROP PROCEDURE IF EXISTS sp_findGames;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_findGames()
+BEGIN
+	SELECT * FROM games G INNER JOIN category C on C.idCategory = G.Category_idCategory;
+END;
+//
+
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE findById
+(IN v_IdGames INT)
+BEGIN
+    SELECT * FROM videogames WHERE id = v_IdGames;
+END;
+//
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_create;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create
+(IN v_name VARCHAR(4000), IN v_img_game LONGBLOB, IN v_date_premier INT, IN v_category_idCategory INT)
+BEGIN
+ DECLARE v_idGames INT(11)  DEFAULT  0;
+ DECLARE v_estado INT(11)  DEFAULT  1;
+    SELECT  MAX(idGames) INTO v_idGames FROM games;
+    IF v_idGames IS NULL THEN 
+	SET v_idGames = 0;
+    END IF;
+    SET v_idGames = v_idGames + 1;
+     INSERT INTO games (idGames, img_game, date_premier, category_idCategory, status) values (v_idGames, v_img_game, v_date_premier, v_category_idCategory, v_status);
+END;
+//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_update
+(IN v_idGames INT,IN v_name VARCHAR(4000),IN v_img_game LONGBLOB,IN v_date_premier INT,IN v_category_idCategory INT,IN v_status INT)
+BEGIN
+    UPDATE games SET   idGames = v_idGames, name = v_name, img_game = v_img_game,  date_premier = v_date_premier, category_idCategory = v_category_idCategory, status = v_status WHERE v_idGames = id;
+END;
+//
+
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_delete2;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete2 (IN v_idGames INT)
+BEGIN
+    UPDATE games SET status = 0 WHERE v_idGames = id;
+END;
+//
+
+DELIMITER ;
