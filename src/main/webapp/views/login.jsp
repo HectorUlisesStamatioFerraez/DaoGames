@@ -17,7 +17,7 @@
 
 <body>
 <br>
-<center> <h1 style="color: #6095ea"> LOGIN </h1> </center>
+<center> <h1 style="color: #6095ea"> Login Usuarios </h1> </center>
 <hr>
 <br>
 <center>
